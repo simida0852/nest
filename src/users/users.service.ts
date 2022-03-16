@@ -10,7 +10,7 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-  ) {}
+  ) { }
   create(createUserDto: CreateUserDto): Promise<User> {
     const user = new User();
     user.name = createUserDto.name;
@@ -31,5 +31,13 @@ export class UsersService {
 
   async remove(id: number): Promise<void> {
     await this.userRepository.delete(id);
+  }
+
+  async findByName(name: string) {
+    return await User.findOne({
+      where: {
+        name: name,
+      },
+    });
   }
 }
